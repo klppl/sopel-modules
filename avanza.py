@@ -8,8 +8,13 @@ import re
 
 @module.commands('aktie', 'a')
 def avanzaprices(bot, trigger):
-    find_stock = json.loads(requests.get("https://www.avanza.se/ab/component/orderbook_search/?query=" + trigger.group(2)).text)
-    id = find_stock[0]["id"]
+
+    try:
+        find_stock = json.loads(requests.get("https://www.avanza.se/ab/component/orderbook_search/?query=" + trigger.group(2)).text)
+        id = find_stock[0]["id"]
+    except IndexError:
+        bot.say("Hittade inget!")
+        return
 
     data = json.loads(requests.get("https://www.avanza.se/_mobile/market/orderbooklist/" + id).text)
 
