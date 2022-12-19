@@ -8,23 +8,10 @@ import re
 
 @module.commands('aktie', 'a')
 def avanzaprices(bot, trigger):
-    name = trigger.group(2)
+    find_stock = json.loads(requests.get("https://www.avanza.se/ab/component/orderbook_search/?query=" + trigger.group(2)).text)
+    id = find_stock[0]["id"]
 
-    url = "https://www.avanza.se/ab/component/orderbook_search/?query=<name>"
-    url = url.replace("<name>", name)
-
-    response = requests.get(url)
-
-    data = json.loads(response.text)
-
-    id = data[0]["id"]
-
-    url = "https://www.avanza.se/_mobile/market/orderbooklist/<id>"
-    url = url.replace("<id>", id)
-
-    response = requests.get(url)
-
-    data = json.loads(response.text)
+    data = json.loads(requests.get("https://www.avanza.se/_mobile/market/orderbooklist/" + id).text)
 
     stock_name = data[0]["name"]
     last_price = data[0]["lastPrice"]
@@ -42,18 +29,18 @@ def avanzaprices(bot, trigger):
         lowest_price = "N/A"
 
     change_in_number = data[0]["change"]
-    change_in_percent = str(data[0]["changePercent"])
-    #change_in_percent = formatting.color(change_in_percent, formatting.colors.RED)
+    change_in_percent = data[0]["changePercent"]
+    if int(change_in_percent) <0:
+        change_in_percent = formatting.color(str(change_in_percent) + '%', formatting.colors.RED)
+    elif change_in_percent >0:
+        change_in_percent = formatting.color(str(change_in_percent) + '%', formatting.colors.GREEN)
+
+    change_in_months = round((float(last_price) - float(price_three_months_ago))/float(price_three_months_ago)*100,1)
+    if int(change_in_months) <0:
+        change_in_months = formatting.color(str(change_in_months) + '%', formatting.colors.RED)
+    elif change_in_months >0:
+        change_in_months = formatting.color(str(change_in_months) + '%', formatting.colors.GREEN)
 
     total_volume_traded = data[0]["totalVolumeTraded"]
-    change_in_months = round((float(last_price) - float(price_three_months_ago))/float(price_three_months_ago)*100,1)
 
-    #if int(change_in_months) <= 0:
-    #    then:change_in_percent = formatting.color(str(change_in_percent), formatting.colors.RED)
-    #elif int(change_in_percent) > 0:
-    #    then: change_in_percent = formatting.color(str(change_in_percent), formatting.colors.GREEN)
-
-
-    #print("Stock: " + str(stock_name) + " " + "Price: " + str(last_price))
-
-    bot.say(f'{stock_name} | {last_price} {currency} | Förändring idag: {change_in_percent} % ({change_in_number} {currency}) | 3 mån: {change_in_months}% ({price_three_months_ago} {currency}) | Volla: {lowest_price} - {highest_price} {currency} | Volym: {total_volume_traded}')
+    bot.say(f'{stock_name} | {last_price} {currency} | Idag: {change_in_percent} ({change_in_number} {currency}) | 3 mån: {change_in_months} ({price_three_months_ago} {currency}) | Volla: {lowest_price} - {highest_price} {currency} | Volym: {total_volume_traded}')
