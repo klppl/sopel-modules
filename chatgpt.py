@@ -1,3 +1,6 @@
+# gpt-3.5-turbo
+
+
 import sopel
 import openai
 import requests
