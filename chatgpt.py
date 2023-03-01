@@ -26,3 +26,4 @@ def openai_chat(bot, trigger):
     chatgpt_output = response.text
 
     bot.say(f'chatgpt: {chatgpt_output}')
+
