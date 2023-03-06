@@ -1,6 +1,7 @@
 import sopel
 import openai
 import requests
+import textwrap
 import apikeys
 
 @sopel.module.commands('aina')
@@ -21,6 +22,7 @@ def aina(bot, trigger):
     )
 
     response = completion.choices[0].text
+    response = textwrap.fill(response, width=100)
 
     response = response.encode("utf-8")
     response = requests.post("https://dumpinen.com", data=response)
