@@ -4,7 +4,7 @@ import requests
 import textwrap
 import apikeys
 
-openai.api_key = OPENAI_API_KEY
+openai.api_key = apikeys.OPENAI_API_KEY
 
 @sopel.module.commands('chatgpt')
 def openai_chat(bot, trigger):

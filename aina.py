@@ -7,7 +7,7 @@ import apikeys
 @sopel.module.commands('aina')
 def aina(bot, trigger):
     # Set up the OpenAI API client - https://beta.openai.com/account/api-keys
-    openai.api_key = OPENAI_API_KEY
+    openai.api_key = apikeys.OPENAI_API_KEY
 
     model_engine = "text-davinci-003"
     prompt = trigger
