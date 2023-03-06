@@ -4,6 +4,7 @@
 import sopel
 import openai
 import requests
+import textwrap
 
 openai.api_key = "API_KEY"
 
@@ -20,6 +21,7 @@ def openai_chat(bot, trigger):
         ],
     )
     response = completion['choices'][0]['message']['content']
+    response = textwrap.fill(response, width=140)
 
     response = response.encode("utf-8")
     response = requests.post("https://dumpinen.com", data=response)
