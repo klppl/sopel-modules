@@ -19,9 +19,9 @@ def openai_chat(bot, trigger):
         ],
     )
     response = completion['choices'][0]['message']['content']
+    response = textwrap.fill(response, width=100)
 
     response = response.encode("utf-8")
-    response = textwrap.fill(response, 400)
     response = requests.post("https://dumpinen.com", data=response)
     chatgpt_output = response.text
 
