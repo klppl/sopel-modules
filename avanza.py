@@ -49,3 +49,24 @@ def avanzaprices(bot, trigger):
     total_volume_traded = data[0]["totalVolumeTraded"]
 
     bot.say(f'{stock_name} | {last_price} {currency} | Idag: {change_in_percent} ({change_in_number} {currency}) | 3 mån: {change_in_months} ({price_three_months_ago} {currency}) | Volla: {lowest_price} - {highest_price} {currency} | Volym: {total_volume_traded}')
+
+
+@module.commands('afind', 'af')
+def avanzafind(bot, trigger):
+
+    # Get user input
+    stock_name = trigger.group(2)
+
+    # Create URL with user input
+    url = f"https://www.avanza.se/_cqbe/search/global-search/global-search-template?query={stock_name}"
+
+    # Get JSON data from URL
+    response = requests.get(url)
+    data = json.loads(response.content)
+
+    link_displays = []
+    for result_group in data["resultGroups"]:
+        for hit in result_group["hits"]:
+            link_displays.append(hit["link"]["linkDisplay"])
+    
+    bot.say(", ".join(link_displays))
