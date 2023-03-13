@@ -81,7 +81,7 @@ def avanzaindex(bot, trigger):
     index_list = [omxs30, nasdaq, dax, nikkei225]
 
     for index in index_list:
-        data = json.loads(requests.get("https://www.avanza.se/_mobile/market/orderbooklist/" + index).text
+        data = json.loads(requests.get("https://www.avanza.se/_mobile/market/orderbooklist/" + index)).text
 
         stock_name = data[0]["name"]
         last_price = data[0]["lastPrice"]
