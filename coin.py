@@ -5,17 +5,24 @@ from sopel import formatting
 
 @module.commands('coin')
 def coin(bot, trigger):
-    name = trigger.group(2)
+    coins = trigger.group(2)
+    if coins:
+        coin_list = coins.split(",")
+        result = []
+        for name in coin_list:
+            response = requests.get(f"https://api.coingecko.com/api/v3/search?query={name.strip()}")
+            json_response = response.json()
 
-    response = requests.get(f"https://api.coingecko.com/api/v3/search?query={name}")
+            if len(json_response["coins"]) == 0:
+                result.append(f"(404 {name.strip()})")
+            else:
+                response_price = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={json_response['coins'][0]['id']}&vs_currencies=usd")
+                data_price = response_price.json()
 
-    json_response = response.json()
+                symbol = formatting.bold(json_response['coins'][0]['symbol'])
+                price = data_price[json_response['coins'][0]['id']]['usd']
+                result.append(f"{symbol} {price}")
 
-    if len(json_response["coins"]) == 0:
-        bot.say("ah ah ah you didn't say the magic word...")
+        bot.say(" ".join(result))
     else:
-        response_price = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={json_response['coins'][0]['id']}&vs_currencies=usd")
-        data_price = response_price.json()
-        price = data_price[json_response['coins'][0]['id']]['usd']
-
-        bot.say(f"{json_response['coins'][0]['name']} ({json_response['coins'][0]['symbol']}) ${price}")
+        bot.say(".coin crypto or .coin crypto,separated,with,commas")
