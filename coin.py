@@ -23,6 +23,6 @@ def coin(bot, trigger):
                 price = data_price[json_response['coins'][0]['id']]['usd']
                 result.append(f"{symbol} {price}")
 
-        bot.say(" ".join(result))
+        bot.say("$ " + " ".join(result))
     else:
         bot.say(".coin crypto or .coin crypto,separated,with,commas")
