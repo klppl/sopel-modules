@@ -165,20 +165,11 @@ def audsek(bot, trigger):
     set_current_bot(bot)
     runMe(tickers)
 
-
-@module.commands("bitte", "btcusd", "btc")
-def bitte(bot, trigger):
-    tickers = "BTC-USD"
-    set_current_bot(bot)
-    runMe(tickers)
-
-
 @module.commands("ada", "cardano")
 def adan(bot, trigger):
     tickers = "ADA-USD"
     set_current_bot(bot)
     runMe(tickers)
-
 
 @module.commands("eth", "ether")
 def eth(bot, trigger):
