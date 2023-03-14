@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 
-@module.commands('bitte', 'bitcoin')
+@module.commands('bitte', 'bitcoin', 'b')
 def bitcoin_price(bot, trigger):
     # create the API URL to fetch the current price of Bitcoin in USD
     url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
@@ -62,4 +62,4 @@ def bitcoin_price(bot, trigger):
     current_price = formatting.bold(f"${current_price}")
 
     # print the results
-    bot.say(f"{current_price} ({percentage_diff} - ${start_price} {timeframe} ago)")
+    bot.say(f"{current_price} {percentage_diff} (${start_price} {timeframe} ago)")
