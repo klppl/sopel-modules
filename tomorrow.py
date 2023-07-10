@@ -69,9 +69,9 @@ def get_weather_code_description(weather_code):
         "6001": {"description": "Underkylt regn", "emoji": "🌧"},
         "6200": {"description": "Lätt underkylt regn", "emoji": "🌧"},
         "6201": {"description": "Kraftigt underkylt regn", "emoji": "🌧"},
-        "7000": {"description": "Iskorn", "emoji": "🌨"},
-        "7101": {"description": "Kraftiga iskorn", "emoji": "🌨"},
-        "7102": {"description": "Lätta iskorn", "emoji": "🌨"},
+        "7000": {"description": "Hagel", "emoji": "🌨"},
+        "7101": {"description": "Kraftigt hagel", "emoji": "🌨"},
+        "7102": {"description": "Lätt hagel", "emoji": "🌨"},
         "8000": {"description": "Åskväder", "emoji": "🌩"}
     }
 
