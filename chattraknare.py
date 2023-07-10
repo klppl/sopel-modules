@@ -31,16 +31,24 @@ def show_stats(bot, trigger):
         return
     db = SopelDB(bot.config)
     channel = trigger.sender
+    today = datetime.date.today()
     if period == 'idag' or period == 'today':
-        date = datetime.date.today().isoformat()
+        start_date = today
+        end_date = today
     elif period == 'igår' or period == 'yesterday':
-        date = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+        start_date = today - datetime.timedelta(days=1)
+        end_date = start_date
     elif period == 'vecka' or period == 'week':
-        date = (datetime.date.today() - datetime.timedelta(days=7)).isoformat()
+        start_date = today - datetime.timedelta(days=today.weekday())
+        end_date = start_date + datetime.timedelta(days=6)
     elif period == 'månad' or period == 'month':
-        date = (datetime.date.today() - datetime.timedelta(days=30)).isoformat()
-    result = db.execute('SELECT nick, SUM(wordcount) FROM wordcounts WHERE date >= ? AND channel = ? GROUP BY nick ORDER BY SUM(wordcount) DESC',
-                        (date, channel))
+        start_date = today.replace(day=1)
+        if today.month == 12:
+            end_date = today.replace(year=today.year+1, month=1, day=1) - datetime.timedelta(days=1)
+        else:
+            end_date = today.replace(month=today.month+1, day=1) - datetime.timedelta(days=1)
+    result = db.execute('SELECT nick, SUM(wordcount) FROM wordcounts WHERE date >= ? AND date <= ? AND channel = ? GROUP BY nick ORDER BY SUM(wordcount) DESC',
+                        (start_date.isoformat(), end_date.isoformat(), channel))
     counts = Counter(dict(result.fetchall()))
 
     reply = '\n'.join(f'{nick}: {count}' for nick, count in counts.most_common())
