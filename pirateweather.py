@@ -84,8 +84,13 @@ def weather(bot, trigger):
 def set_location(bot, trigger):
     city = trigger.group(2)
     if not city:
-        bot.say("Ange plejs, exempel .väderplats Stockholm")
-        return
+        current_location = bot.db.get_nick_value(trigger.nick, 'location')
+        if current_location:
+            bot.say(f"{trigger.nick}s plejs är {current_location}")
+            return
+        else:
+            bot.say("Ange plejs, exempel .väderplats Stockholm")
+            return
     bot.db.set_nick_value(trigger.nick, 'location', city)
     bot.say(f"Sparat {trigger.nick}s plejs till {city}")
 
