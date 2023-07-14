@@ -52,7 +52,7 @@ def print_weather(weather):
     uv_index = daily_data.get('uvIndex', 'No data')
     uv_index_emoji = get_uv_index_emoji(uv_index)
     uv_index_time = datetime.fromtimestamp(daily_data.get('uvIndexTime')).strftime('%H:%M') if 'uvIndexTime' in daily_data else 'No data'
-    return f"{weather_emoji} {current_weather['summary']}, Temp: {round(current_weather['temperature'])}°C (H: {round(temp_max)}°C L: {round(temp_min)}°C), Luftfuktighet: {humidity}%, UV: {uv_index_emoji} {current_weather['uvIndex']} ({uv_index} kl {uv_index_time}), Soluppgång: {datetime.fromtimestamp(daily_data['sunriseTime']).strftime('%H:%M')}, Solnedgång: {datetime.fromtimestamp(daily_data['sunsetTime']).strftime('%H:%M')}"
+    return f"{weather_emoji} {current_weather['summary']}, Temp: {round(current_weather['temperature'])}°C (H: {round(temp_max)}°C L: {round(temp_min)}°C), Luftfuktighet: {humidity}%, UV: {uv_index_emoji} {current_weather['uvIndex']}, Soluppgång: {datetime.fromtimestamp(daily_data['sunriseTime']).strftime('%H:%M')}, Solnedgång: {datetime.fromtimestamp(daily_data['sunsetTime']).strftime('%H:%M')}"
 
 def get_coordinates(city, opencage_api_key):
     opencage_url = f'https://api.opencagedata.com/geocode/v1/json?q={city}&key={opencage_api_key}'
