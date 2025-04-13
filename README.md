@@ -1,6 +1,16 @@
 # Sopel IRC Bot Plugins
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![Python](https://img.shields.io/badge/python-3.6%2B-blue)](https://www.python.org/downloads/)
+[![Sopel](https://img.shields.io/badge/sopel-7.0%2B-green)](https://sopel.chat)
+
 A collection of custom plugins for the Sopel IRC bot. These plugins provide various functionalities from financial data to weather information and more.
+
+## Requirements
+
+- Python 3.6 or higher
+- Sopel 7.0 or higher
+- pip (Python package installer)
 
 ## Installation
 
@@ -9,154 +19,128 @@ A collection of custom plugins for the Sopel IRC bot. These plugins provide vari
 git clone https://github.com/yourusername/sopel-modules.git ~/.sopel/modules/
 ```
 
-2. Make sure you have the required dependencies installed (see individual plugin sections for specific requirements)
+2. Install required dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Configure API keys in your Sopel configuration file (~/.sopel/default.cfg):
+```ini
+[pirateweather]
+api_key = your_api_key_here
+
+[chatgpt]
+api_key = your_openai_api_key_here
+
+[yahoofinance]
+api_key = your_api_key_here
+
+# Add other API keys as needed
+```
 
 ## Available Plugins
 
-### Financial Plugins
-
-- **yf.py** / **yahoofinance.py**: Yahoo Finance integration for stock market data
-  - Commands:
-    - `.yf <stock symbol>` - Get current stock price and information
-    - `.yf <stock symbol> <timeframe>` - Get historical data (e.g., 1d, 5d, 1mo, 1y)
-    - `.yf <stock symbol> news` - Get latest news about the stock
-
-- **avanza.py**: Avanza stock market integration
-  - Commands:
-    - `.a <stock name>` - Get current stock information from Avanza
-    - `.a <stock name> <timeframe>` - Get historical data
-
-- **krypto.py**: Cryptocurrency information
-  - Commands:
-    - `.krypto <coin>` - Get current cryptocurrency price
-    - `.krypto <coin> <currency>` - Get price in specific currency
-
-- **coin.py**: Coin-related commands
-  - Commands:
-    - `.coin <symbol>` - Get current coin price
-    - `.coin <symbol> <currency>` - Get price in specific currency
+### Financial Data
+| Plugin | Description | Dependencies | API Key Required |
+|--------|-------------|--------------|------------------|
+| yf.py / yahoofinance.py | Yahoo Finance integration | yfinance | Yes |
+| avanza.py | Avanza market data | avanza-api | No |
+| krypto.py | Cryptocurrency info | requests | No |
+| coin.py | Coin price tracking | requests | No |
 
 ### Weather & Environment
-
-- **pirateweather.py**: Weather information using Pirate Weather API
-  - Commands:
-    - `.weather <location>` - Get current weather
-    - `.forecast <location>` - Get weather forecast
-
-- **pollen.py**: Pollen information
-  - Commands:
-    - `.pollen <location>` - Get current pollen levels
-    - `.pollen forecast <location>` - Get pollen forecast
-
-- **wttr.py**: Weather information using wttr.in
-  - Commands:
-    - `.wttr <city>` - Get current weather
-    - `.wttr <city> <format>` - Get weather in specific format
+| Plugin | Description | Dependencies | API Key Required |
+|--------|-------------|--------------|------------------|
+| pirateweather.py | Weather information | requests | Yes |
+| pollen.py | Pollen information | requests | No |
+| wttr.py | Weather via wttr.in | requests | No |
 
 ### Social Media & Content
+| Plugin | Description | Dependencies | API Key Required |
+|--------|-------------|--------------|------------------|
+| reddit.py | Reddit integration | praw | Yes |
+| twitter.py | Twitter integration | tweepy | Yes |
+| ig.py | Instagram integration | instaloader | No |
+| imgur.py | Imgur integration | imgurpython | Yes |
+| tvmaze.py | TV show information | requests | No |
 
-- **reddit.py**: Reddit integration
-  - Commands:
-    - `.reddit <subreddit>` - Get top posts from subreddit
-    - `.reddit <subreddit> <sort>` - Get posts sorted by (hot, new, top)
-
-- **twitter.py**: Twitter integration
-  - Commands:
-    - `.twitter <username>` - Get latest tweets
-    - `.twitter search <query>` - Search tweets
-
-- **ig.py**: Instagram integration
-  - Commands:
-    - `.ig <username>` - Get Instagram profile info
-    - `.ig <username> recent` - Get recent posts
-
-- **imgur.py**: Imgur integration
-  - Commands:
-    - `.imgur <query>` - Search Imgur
-    - `.imgur random` - Get random image
-
-- **tvmaze.py**: TV show information
-  - Commands:
-    - `.tv <show name>` - Get show information
-    - `.tv schedule` - Get TV schedule
-
-### Swedish-specific
-
-- **biluppgifter.py**: Swedish vehicle information
-  - Commands:
-    - `.bil <registration number>` - Get vehicle information
-    - `.bil <registration number> owner` - Get owner information
-
-- **namnsdag.py**: Swedish name day information
-  - Commands:
-    - `.namnsdag` - Get today's name day
-    - `.namnsdag <date>` - Get name day for specific date
-
-- **svenskel.py**: Swedish language related commands
-  - Commands:
-    - `.el [snitt|dag|1|2|3|4]` - Get electricity prices
-    - `.el forecast` - Get electricity price forecast
-
-- **slangopedia.py**: Swedish slang dictionary
-  - Commands:
-    - `.slang <word>` - Get slang definition
-    - `.slang random` - Get random slang word
+### Swedish Services
+| Plugin | Description | Dependencies | API Key Required |
+|--------|-------------|--------------|------------------|
+| biluppgifter.py | Vehicle information | requests | No |
+| namnsdag.py | Name day information | requests | No |
+| svenskel.py | Electricity prices | requests | No |
+| slangopedia.py | Slang dictionary | requests | No |
+| fredag.py | Friday checker | None | No |
 
 ### Utility & Fun
+| Plugin | Description | Dependencies | API Key Required |
+|--------|-------------|--------------|------------------|
+| chatgpt.py | ChatGPT integration | openai | Yes |
+| chattraknare.py | Chat statistics | sqlite3 | No |
+| rep.py | Reputation system | sqlite3 | No |
+| subdomain.py | Domain information | dns.resolver | No |
+| bitte.py | German translations | requests | No |
+| aina.py | Q&A bot | None | No |
+| pee.py | Pee information | None | No |
 
-- **chatgpt.py**: ChatGPT integration
-  - Commands:
-    - `.chatgpt <question>` - Ask ChatGPT a question
-    - `.chatgpt reset` - Reset conversation
+## Plugin Usage
 
-- **chattraknare.py**: Chat statistics
-  - Commands:
-    - `.stats` - Get chat statistics
-    - `.stats <user>` - Get user statistics
+### fredag.py
+Responds to questions about whether it's Friday in Swedish.
 
-- **fredag.py**: Friday-related commands
-  - Commands:
-    - `.fredag` - Check if it's Friday
-    - `.fredag countdown` - Time until next Friday
+**Usage:**
+- Ask "är det fredag?" in the chat
+- Bot responds with "JA!" and a link on Fridays
+- Bot responds with "NEJ" on other days
 
-- **lastnight.py**: Last night information
-  - Commands:
-    - `.lastnight` - Get latest from lastnight.in/sweden
+### Other Plugins
+See individual sections above for specific commands and usage.
 
-- **pee.py**: Pee-related commands
-  - Commands:
-    - `.pee` - Get pee-related information
+## Development
 
-- **rep.py**: Reputation system
-  - Commands:
-    - `.rep <user>` - Check user reputation
-    - `.rep <user> ++` - Give reputation
-    - `.rep <user> --` - Remove reputation
+### Setting Up Development Environment
 
-- **subdomain.py**: Subdomain information
-  - Commands:
-    - `.subdomain <domain>` - Get subdomain information
+1. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-- **bitte.py**: German language helper
-  - Commands:
-    - `.bitte <word>` - Get German translation
+2. Install development dependencies:
+```bash
+pip install -r requirements-dev.txt
+```
 
-- **aina.py**: Aina-related commands
-  - Commands:
-    - `.aina <question>` - Ask Aina a question
+3. Install pre-commit hooks:
+```bash
+pre-commit install
+```
 
-## Configuration
-
-Each plugin may require specific configuration in your Sopel config file. Please refer to the individual plugin files for configuration requirements.
-
-## License
-
-This project is licensed under the terms specified in the LICENSE.md file.
+### Running Tests
+```bash
+pytest tests/
+```
 
 ## Contributing
 
-Feel free to submit issues and pull requests. All contributions are welcome!
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Support
 
-For support, please open an issue in this repository or contact the maintainer.
+For support:
+1. Check the [Issues](https://github.com/yourusername/sopel-modules/issues) page
+2. Open a new issue with detailed information about your problem
+3. Contact the maintainer
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
