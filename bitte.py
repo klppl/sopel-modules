@@ -40,14 +40,25 @@ def bitcoin_price(bot, trigger):
             start_date = datetime.today().replace(day=1, month=1) - timedelta(days=1)
             start_date -= relativedelta(years=years)
 
-    # create the API URL with the start date
-    url = f"https://api.coingecko.com/api/v3/coins/bitcoin/history?date={start_date.strftime('%d-%m-%Y')}&localization=EN"
+    try:
+        # create the API URL with the start date
+        url = f"https://api.coingecko.com/api/v3/coins/bitcoin/history?date={start_date.strftime('%d-%m-%Y')}&localization=EN"
 
-    # make a request to the API to get the price from the start date
-    response = requests.get(url)
-    data = response.json()
-    start_price = data['market_data']['current_price']['usd']
-    start_price = int(start_price)
+        # make a request to the API to get the price from the start date
+        response = requests.get(url)
+        data = response.json()
+
+        # Check if the response contains the expected data
+        if 'market_data' not in data or 'current_price' not in data['market_data'] or 'usd' not in data['market_data']['current_price']:
+            bot.say("Error: Could not fetch historical Bitcoin price")
+            return
+
+        start_price = data['market_data']['current_price']['usd']
+        start_price = int(start_price)
+
+    except Exception as e:
+        bot.say("Error: Could not fetch historical Bitcoin price")
+        return
 
     # calculate the percentage difference
     percentage_diff = (current_price - start_price) / start_price * 100
