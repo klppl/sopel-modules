@@ -1,68 +1,70 @@
-# sopel-modules
-Just drop these files in .sopel\plugins
+# Sopel IRC Bot Plugins
 
-## aina.py
+A collection of custom plugins for the Sopel IRC bot. These plugins provide various functionalities from financial data to weather information and more.
 
-Uses OpenAI Davinci-002.
-Example: .aina <question>
+## Installation
 
-## avanza.py
-  
-Returns current stock info from avanza.
-Example: .a <stock name>
-  
-## biluppgifter.py
-Returns ownership details for car.
-Example: .bil ABC123
+1. Clone this repository to your Sopel modules directory:
+```bash
+git clone https://github.com/yourusername/sopel-modules.git ~/.sopel/modules/
+```
 
-## bitte.py
-  
-## chatgpt.py
-Uses OpenAI Chatgpt 3.5
-Example: .chatgpt <question>
- 
-## coin.py
-Returns current price for crypto currency.
-Example: .coin DOGE
+2. Make sure you have the required dependencies installed (see individual plugin sections for specific requirements)
 
-## get_yahoo_quotes.py
+## Available Plugins
 
-## ig.py
-  
-## krypto.py
+### Financial Plugins
 
-## lastnight.py
-Returns latest from lastnight.in/sweden
-Example: .lastnight
+- **yf.py** / **yahoofinance.py**: Yahoo Finance integration for stock market data
+- **avanza.py**: Avanza stock market integration
+- **krypto.py**: Cryptocurrency information
+- **coin.py**: Coin-related commands
 
-## movies.py
-Looksup movie at 2embed.to and returns url where you can stream the movie.
-Example: .movie shawshank redemption
+### Weather & Environment
 
-## namnsdag.py
-Return todays namnsdag.
-Example: .namnsdag
+- **pirateweather.py**: Weather information using Pirate Weather API
+- **pollen.py**: Pollen information
+- **wttr.py**: Weather information using wttr.in
 
-## pee.py
+### Social Media & Content
 
-## rep.py
+- **reddit.py**: Reddit integration
+- **twitter.py**: Twitter integration
+- **ig.py**: Instagram integration
+- **imgur.py**: Imgur integration
+- **tvmaze.py**: TV show information
 
-## rovarspraket.py
+### Swedish-specific
 
-## slangopedia.py
-Get definition of word from slangopedia.
-Example: .slang wallah
+- **biluppgifter.py**: Swedish vehicle information
+- **namnsdag.py**: Swedish name day information
+- **svenskel.py**: Swedish language related commands
+- **slangopedia.py**: Swedish slang dictionary
 
-## svenskel.py
-Current price for electricity in Sweden.
-Example: .el [snitt|dag|1|2|3|4]
+### Utility & Fun
 
-## tystaleken.py
+- **chatgpt.py**: ChatGPT integration
+- **chattraknare.py**: Chat statistics
+- **fredag.py**: Friday-related commands
+- **lastnight.py**: Last night information
+- **pee.py**: Pee-related commands
+- **rep.py**: Reputation system
+- **subdomain.py**: Subdomain information
+- **bitte.py**: German language helper
+- **aina.py**: Aina-related commands
 
-## wttr.py
-Returns current weather for location.
-Example: .wttr city
+## Configuration
 
-## yahoofinance.py
+Each plugin may require specific configuration in your Sopel config file. Please refer to the individual plugin files for configuration requirements.
 
-## yf.py 
+## License
+
+This project is licensed under the terms specified in the LICENSE.md file.
+
+## Contributing
+
+Feel free to submit issues and pull requests. All contributions are welcome!
+
+## Support
+
+For support, please open an issue in this repository or contact the maintainer.
