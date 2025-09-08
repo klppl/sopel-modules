@@ -1,13 +1,13 @@
 # coding=utf-8
 """
 sopel_reddit.py
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 A Sopel plugin that fetches Reddit data via its public JSON endpoints.
 When a Reddit URL is posted, the plugin retrieves the corresponding data
 and formats it for display in IRC using a configurable template.
 
-Configuration (via Sopel’s configure command):
+Configuration (via Sopel's configure command):
   [reddit]
       enabled = yes
       maxChars = 300
@@ -194,7 +194,11 @@ def reddit_lookup(bot, trigger):
     }
 
     # Truncate extract if it exceeds the maximum characters allowed.
+    # Fix: Handle case where maxChars might be None
     max_chars = getattr(bot.config.reddit, "maxChars", 300)
+    if max_chars is None:
+        max_chars = 300
+    
     if extract and len(extract) > max_chars:
         extract = extract[:max_chars - 3].rsplit(" ", 1)[0].rstrip(",.") + "..."
     template_vars["extract"] = extract
